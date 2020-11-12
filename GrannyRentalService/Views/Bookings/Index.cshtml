@@ -1,0 +1,37 @@
+﻿@using GrannyRentalService.Models;
+@model List<Booking>;
+<html>
+<body>
+    <table>
+        <thead>
+            <tr>
+                <th>BookingID</th>
+                <th>GrannyID</th>
+                <th>UserID</th>
+                <th>From</th>
+                <th>To</th>
+                <th>Total Cost</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{ foreach (Booking b in Model)
+                {
+                    <tr>
+                        <td>@b.ID</td>
+                        <td>@b.GrannyID</td>
+                        <td>@b.UserID</td>
+                        <td>@b.From</td>
+                        <td>@b.To</td>
+                        <td>@b.TotalCost</td>
+                        <td>
+                            <a asp-action="Edit" asp-route-id="b.ID">edit</a> |
+                            <a asp-action="Delete" asp-route-id="b.ID">delete</a>
+                        </td>
+                    </tr>
+
+                }
+            }
+        </tbody>
+    </table>
+</body>
+</html>
