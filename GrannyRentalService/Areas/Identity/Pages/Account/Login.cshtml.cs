@@ -11,7 +11,6 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
-using GrannyRentalService.Models;
 
 namespace GrannyRentalService.Areas.Identity.Pages.Account
 {
@@ -33,7 +32,7 @@ namespace GrannyRentalService.Areas.Identity.Pages.Account
 
         [BindProperty]
         public InputModel Input { get; set; }
-        
+
         public IList<AuthenticationScheme> ExternalLogins { get; set; }
 
         public string ReturnUrl { get; set; }

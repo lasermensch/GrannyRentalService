@@ -12,9 +12,6 @@ using GrannyRentalService.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Options;
-using Microsoft.AspNetCore.Authorization;
-using GrannyRentalService.Models;
 
 namespace GrannyRentalService
 {
@@ -30,22 +27,13 @@ namespace GrannyRentalService
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<GrannyRentalContext>(options => options.UseSqlServer("Server = (localdb)\\mssqllocaldb; Database = dbGrannyRental; Trusted_Connection = true; MultipleActiveResultSets = true"));
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews();
             services.AddRazorPages();
-            //Nedan sätts defaultläget till att kräva autentisering om inget annat bestäms för kontroller och sidor.
-            services.AddAuthorization(options => 
-            {
-                options.FallbackPolicy = new AuthorizationPolicyBuilder()
-                .RequireAuthenticatedUser()
-                .Build();
-            });
             services.Configure<IdentityOptions>(options =>
             {
                 //Lösenordsinställningar för att promota lösenstrunt.
@@ -102,7 +90,7 @@ namespace GrannyRentalService
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Grannies}/{action=Index}/{id?}");
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
             });
         }
